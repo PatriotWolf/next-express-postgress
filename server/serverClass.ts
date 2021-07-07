@@ -2,6 +2,8 @@ import express from "express";
 import { IncomingMessage, ServerResponse } from "http";
 import { UrlWithParsedQuery } from "url";
 
+import usersRouter from "./routes/UserRouter";
+
 interface ServerProps {
   handle: (
     req: IncomingMessage,
@@ -25,6 +27,7 @@ class Server {
   }
 
   private routerConfig() {
+    this.app.use("/list", usersRouter);
     this.app.get("/list", (_req, res) => {
       return res.json({ data: "test" });
     });
