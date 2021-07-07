@@ -4,7 +4,7 @@ class UserControler {
   public async get(_req: Request, res: Response) {
     try {
       const client = await pool.connect();
-      const sql = "SELECT * FROM users";
+      const sql = "SELECT * FROM userstest";
       const { rows } = await client.query(sql);
       const todos = rows;
       client.release();

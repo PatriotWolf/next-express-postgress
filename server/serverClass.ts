@@ -3,7 +3,7 @@ import { IncomingMessage, ServerResponse } from "http";
 import { UrlWithParsedQuery } from "url";
 
 import usersRouter from "./routes/UserRouter";
-import pool from "./db/pool";
+import pool, { createUserTable } from "./db/pool";
 
 interface ServerProps {
   handle: (
@@ -38,6 +38,7 @@ class Server {
     pool.connect(function (err, _client, _done) {
       if (err) throw new Error(err.message);
       console.log("Connected");
+      createUserTable();
     });
   }
 
