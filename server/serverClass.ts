@@ -23,8 +23,13 @@ class Server {
     this.app = express();
     this.handle = handle;
     this.isDev = isDev;
+    this.config();
     this.routerConfig();
     this.dbConnect();
+  }
+
+  private config() {
+    this.app.use(express.json({ limit: `1mb` }));
   }
 
   private routerConfig() {
