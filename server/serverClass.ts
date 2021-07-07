@@ -3,6 +3,7 @@ import { IncomingMessage, ServerResponse } from "http";
 import { UrlWithParsedQuery } from "url";
 
 import usersRouter from "./routes/UserRouter";
+import pool from "./db/pool";
 
 interface ServerProps {
   handle: (
@@ -22,17 +23,21 @@ class Server {
     this.app = express();
     this.handle = handle;
     this.isDev = isDev;
-
     this.routerConfig();
+    this.dbConnect();
   }
 
   private routerConfig() {
-    this.app.use("/list", usersRouter);
-    this.app.get("/list", (_req, res) => {
-      return res.json({ data: "test" });
-    });
+    this.app.use("/user", usersRouter);
     this.app.get("*", (req, res) => {
       return this.handle(req, res);
+    });
+  }
+
+  private dbConnect() {
+    pool.connect(function (err, _client, _done) {
+      if (err) throw new Error(err.message);
+      console.log("Connected");
     });
   }
 
