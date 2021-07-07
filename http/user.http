@@ -7,7 +7,7 @@ POST http://localhost:3000/user
 Content-Type: application/json
 
 {
-    "username":"John Doe",
+    "username":"JohnDoe",
     "email":"johndoe@gmail.com",
-    "phone": "0123456799"
+    "phone": "0123456789"
 }
