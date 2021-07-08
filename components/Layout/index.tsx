@@ -7,11 +7,13 @@ import {
   Typography,
   Hidden,
   Button,
+  useTheme,
 } from "@material-ui/core";
 import { Menu } from "@material-ui/icons";
 import Sidebar from "./Sidebar";
 
 const Layout: React.FC = ({ children }) => {
+  const theme = useTheme();
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = React.useState(false);
   const handleDrawerToggle = () => {
     setIsMobileDrawerOpen(!isMobileDrawerOpen);
@@ -37,7 +39,10 @@ const Layout: React.FC = ({ children }) => {
       <Grid
         container
         direction="column"
-        style={{ height: `100vh`, paddingTop: `20vh` }}
+        style={{
+          height: `100vh`,
+          padding: `${theme.spacing(3)}px ${theme.spacing(1)}px`,
+        }}
       >
         <Grid item>
           <Box>{children}</Box>
