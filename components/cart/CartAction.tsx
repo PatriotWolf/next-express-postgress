@@ -1,24 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, ButtonGroup } from "@material-ui/core";
 
-const CartAction: React.FC = () => {
-  const [state, setState] = useState({ counter: 1 });
+interface CartActionProps {
+  amount: number;
+  handleAddQuatity: () => void;
+  handleReduceQuatity: () => void;
+}
 
-  const handleIncrement = () => {
-    setState((state) => ({ counter: state.counter + 1 }));
-  };
-
-  const handleDecrement = () => {
-    setState((state) => ({ counter: state.counter - 1 }));
-  };
-
-  const displayCounter = state.counter > 0;
+const CartAction: React.FC<CartActionProps> = ({
+  amount,
+  handleAddQuatity,
+  handleReduceQuatity,
+}) => {
+  const displayCounter = amount > 0;
 
   return (
     <ButtonGroup aria-label="small outlined button group">
-      <Button onClick={handleIncrement}>+</Button>
-      {displayCounter && <Button disabled>{state.counter}</Button>}
-      {displayCounter && <Button onClick={handleDecrement}>-</Button>}
+      <Button onClick={handleAddQuatity}>+</Button>
+      {displayCounter && <Button disabled>{amount}</Button>}
+      {displayCounter && <Button onClick={handleReduceQuatity}>-</Button>}
     </ButtonGroup>
   );
 };

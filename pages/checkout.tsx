@@ -2,8 +2,10 @@ import React from "react";
 import {
   Container,
   Grid,
+  Box,
   Paper,
   Typography,
+  Divider,
   useTheme,
 } from "@material-ui/core";
 import { observer } from "mobx-react";
@@ -63,7 +65,21 @@ const CheckoutPage: React.FC = observer(() => {
           >
             <Typography variant="h4">Summary</Typography>
 
-            <CartList productList={cartStore.entryList} />
+            <CartList
+              productList={cartStore.entryList}
+              removeCart={(id: string) => cartStore.removeFromCart(id)}
+            />
+            <Divider />
+            <Box
+              style={{
+                display: `flex`,
+                justifyContent: `space-between`,
+                padding: `${theme.spacing(1)}px`,
+              }}
+            >
+              <Typography variant="body1">Total</Typography>
+              <Typography>${cartStore.total.toFixed(2)}</Typography>
+            </Box>
           </Paper>
         </Grid>
       </Grid>

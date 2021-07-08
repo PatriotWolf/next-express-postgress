@@ -7,26 +7,35 @@ import {
 } from "@material-ui/core";
 import { observer } from "mobx-react";
 
-import { ProductProps } from "store/productStore";
 import CartAction from "./CartAction";
+import ShoppingCartEntry from "store/cartStore/cartEntry";
 
 interface CartListComponentProps {
-  productList: ProductProps[];
+  productList: ShoppingCartEntry[];
+  removeCart: (arg: string) => void;
 }
 
 const CartList: React.FC<CartListComponentProps> = observer(
-  ({ productList }) => {
+  ({ productList, removeCart }) => {
     return (
       <List>
         {productList.length > 0 ? (
-          productList.map((product: ProductProps) => (
-            <ListItem key={`cart-${product.id}`}>
+          productList.map((entry: ShoppingCartEntry) => (
+            <ListItem key={`cart-${entry.product.id}`}>
               <ListItemText
-                primary={product.name}
-                secondary={`$${product.price}`}
+                primary={entry.product.name}
+                secondary={`$${entry.price.toFixed(2)}`}
               />
               <ListItemSecondaryAction>
-                <CartAction />
+                <CartAction
+                  amount={entry.amount}
+                  handleAddQuatity={() => entry.increaseAmount()}
+                  handleReduceQuatity={() =>
+                    entry.amount > 1
+                      ? entry.decreaseAmount()
+                      : removeCart(entry.product.id)
+                  }
+                />
               </ListItemSecondaryAction>
             </ListItem>
           ))
