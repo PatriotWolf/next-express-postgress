@@ -1,11 +1,10 @@
 import React from "react";
+import ProductStore from "./productStore";
 
 class RootStore {
-  obj: {
-    data: string;
-  };
+  productStore: ProductStore;
   constructor() {
-    this.obj = { data: "foo" };
+    this.productStore = new ProductStore();
   }
 }
 

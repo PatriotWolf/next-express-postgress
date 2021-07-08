@@ -6,10 +6,13 @@ import {
   Typography,
   useTheme,
 } from "@material-ui/core";
-import { useStores } from "store";
+import { observer } from "mobx-react";
 
-const CheckoutPage: React.FC = () => {
-  const store = useStores();
+import { useStores } from "store";
+import { ProductProps } from "store/productStore";
+
+const CheckoutPage: React.FC = observer(() => {
+  const { productStore } = useStores();
   const theme = useTheme();
   return (
     <Container component="main">
@@ -35,7 +38,9 @@ const CheckoutPage: React.FC = () => {
             }}
           >
             <Typography variant="h4">Product</Typography>
-            <Typography variant="subtitle1">{store.obj.data}</Typography>
+            {productStore.productList.map((product: ProductProps) => (
+              <Typography key={product.id}>{product.name}</Typography>
+            ))}
           </Paper>
         </Grid>
         <Grid
@@ -57,5 +62,5 @@ const CheckoutPage: React.FC = () => {
       </Grid>
     </Container>
   );
-};
+});
 export default CheckoutPage;
