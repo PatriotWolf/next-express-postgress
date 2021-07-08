@@ -6,8 +6,10 @@ import {
   Typography,
   useTheme,
 } from "@material-ui/core";
+import { useStores } from "store";
 
 const CheckoutPage: React.FC = () => {
+  const store = useStores();
   const theme = useTheme();
   return (
     <Container component="main">
@@ -33,6 +35,7 @@ const CheckoutPage: React.FC = () => {
             }}
           >
             <Typography variant="h4">Product</Typography>
+            <Typography variant="subtitle1">{store.obj.data}</Typography>
           </Paper>
         </Grid>
         <Grid
