@@ -1,8 +1,15 @@
 import React from "react";
-import { List, ListItem, ListItemText } from "@material-ui/core";
+import {
+  List,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
+} from "@material-ui/core";
 import { observer } from "mobx-react";
 
 import { ProductProps } from "store/productStore";
+import CartAction from "./CartAction";
+
 interface CartListComponentProps {
   productList: ProductProps[];
 }
@@ -18,6 +25,9 @@ const CartList: React.FC<CartListComponentProps> = observer(
                 primary={product.name}
                 secondary={`$${product.price}`}
               />
+              <ListItemSecondaryAction>
+                <CartAction />
+              </ListItemSecondaryAction>
             </ListItem>
           ))
         ) : (
