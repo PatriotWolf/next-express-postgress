@@ -1,12 +1,14 @@
-import React from "react";
+import React, { ChangeEvent, useState } from "react";
 import {
   Container,
   Grid,
   Box,
   Paper,
   Typography,
+  TextField,
   Divider,
   useTheme,
+  Button,
 } from "@material-ui/core";
 import { observer } from "mobx-react";
 
@@ -17,9 +19,14 @@ import { ProductProps } from "store/productStore";
 
 const CheckoutPage: React.FC = observer(() => {
   const { productStore, cartStore } = useStores();
+  const [promoCode, setPromoCode] = useState(``);
   const theme = useTheme();
   const onAddToCart = (product: ProductProps) => {
     cartStore.addToCart(product);
+  };
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setPromoCode(value);
   };
   return (
     <Container component="main">
@@ -69,6 +76,31 @@ const CheckoutPage: React.FC = observer(() => {
               productList={cartStore.entryList}
               removeCart={(id: string) => cartStore.removeFromCart(id)}
             />
+            <Box
+              style={{
+                display: `flex`,
+                justifyContent: `space-between`,
+                padding: `${theme.spacing(1)}px`,
+              }}
+            >
+              <TextField
+                value={promoCode}
+                id="promocode"
+                name="promocode"
+                placeholder="Promo Code"
+                label="Promo Code"
+                variant="outlined"
+                InputLabelProps={{ shrink: true }}
+                onChange={handleChange}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => cartStore.redeemPromo(promoCode)}
+              >
+                redeem
+              </Button>
+            </Box>
             <Divider />
             <Box
               style={{

@@ -16,11 +16,27 @@ class CartStore {
       this.entryList.push(cartEntry);
     }
   }
+
   removeFromCart(id: string): void {
     this.entryList = this.entryList.filter((entry) => {
       return entry.product.id !== id;
     });
   }
+
+  redeemPromo(code: string): void {
+    if (code === `FF9543D1`) {
+      const i = this.entryList.find((entry) => entry.product?.id === `docgen`);
+      if (i !== undefined) {
+        i.discount = () => {
+          if (i.amount >= 10) {
+            return 8.99 * i.amount;
+          }
+          return 0;
+        };
+      }
+    }
+  }
+
   get total(): number {
     return this.entryList.reduce((acc, entry) => {
       return acc + entry.price;
