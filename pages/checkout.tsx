@@ -8,8 +8,9 @@ import {
 } from "@material-ui/core";
 import { observer } from "mobx-react";
 
-import { useStores } from "store";
 import ProductList from "components/product/ProductList";
+import CartList from "components/cart/CartList";
+import { useStores } from "store";
 import { ProductProps } from "store/productStore";
 
 const CheckoutPage: React.FC = observer(() => {
@@ -61,9 +62,8 @@ const CheckoutPage: React.FC = observer(() => {
             }}
           >
             <Typography variant="h4">Summary</Typography>
-            {cartStore.entryList.map((product: ProductProps) => (
-              <Typography key={product.id}>{product.name}</Typography>
-            ))}
+
+            <CartList productList={cartStore.entryList} />
           </Paper>
         </Grid>
       </Grid>
