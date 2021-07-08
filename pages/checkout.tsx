@@ -9,7 +9,7 @@ import {
 import { observer } from "mobx-react";
 
 import { useStores } from "store";
-import { ProductProps } from "store/productStore";
+import ProductList from "components/product/ProductList";
 
 const CheckoutPage: React.FC = observer(() => {
   const { productStore } = useStores();
@@ -20,7 +20,6 @@ const CheckoutPage: React.FC = observer(() => {
         container
         spacing={2}
         style={{
-          alignItems: `center`,
           boxSizing: `border-box`,
         }}
       >
@@ -38,9 +37,7 @@ const CheckoutPage: React.FC = observer(() => {
             }}
           >
             <Typography variant="h4">Product</Typography>
-            {productStore.productList.map((product: ProductProps) => (
-              <Typography key={product.id}>{product.name}</Typography>
-            ))}
+            <ProductList productList={productStore.productList} />
           </Paper>
         </Grid>
         <Grid
