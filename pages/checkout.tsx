@@ -1,5 +1,11 @@
 import React from "react";
-import { Container, Grid, Paper, useTheme } from "@material-ui/core";
+import {
+  Container,
+  Grid,
+  Paper,
+  Typography,
+  useTheme,
+} from "@material-ui/core";
 
 const CheckoutPage: React.FC = () => {
   const theme = useTheme();
@@ -26,7 +32,7 @@ const CheckoutPage: React.FC = () => {
               padding: theme.spacing(1),
             }}
           >
-            Section 1
+            <Typography variant="h4">Product</Typography>
           </Paper>
         </Grid>
         <Grid
@@ -42,7 +48,7 @@ const CheckoutPage: React.FC = () => {
               padding: theme.spacing(1),
             }}
           >
-            Section 2
+            <Typography variant="h4">Summary</Typography>
           </Paper>
         </Grid>
       </Grid>
