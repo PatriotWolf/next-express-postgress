@@ -10,10 +10,14 @@ import { observer } from "mobx-react";
 
 import { useStores } from "store";
 import ProductList from "components/product/ProductList";
+import { ProductProps } from "store/productStore";
 
 const CheckoutPage: React.FC = observer(() => {
-  const { productStore } = useStores();
+  const { productStore, cartStore } = useStores();
   const theme = useTheme();
+  const onAddToCart = (product: ProductProps) => {
+    cartStore.addToCart(product);
+  };
   return (
     <Container component="main">
       <Grid
@@ -37,7 +41,10 @@ const CheckoutPage: React.FC = observer(() => {
             }}
           >
             <Typography variant="h4">Product</Typography>
-            <ProductList productList={productStore.productList} />
+            <ProductList
+              productList={productStore.productList}
+              onAddToCard={onAddToCart}
+            />
           </Paper>
         </Grid>
         <Grid
@@ -54,6 +61,9 @@ const CheckoutPage: React.FC = observer(() => {
             }}
           >
             <Typography variant="h4">Summary</Typography>
+            {cartStore.entryList.map((product: ProductProps) => (
+              <Typography key={product.id}>{product.name}</Typography>
+            ))}
           </Paper>
         </Grid>
       </Grid>

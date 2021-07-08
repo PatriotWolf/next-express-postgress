@@ -11,9 +11,13 @@ import { ProductProps } from "store/productStore";
 
 interface ProductListComponentProps {
   productList: ProductProps[];
+  onAddToCard: (arg: ProductProps) => void;
 }
 
-const ProductList: React.FC<ProductListComponentProps> = ({ productList }) => {
+const ProductList: React.FC<ProductListComponentProps> = ({
+  productList,
+  onAddToCard,
+}) => {
   return (
     <List>
       {productList.map((product: ProductProps) => (
@@ -23,7 +27,11 @@ const ProductList: React.FC<ProductListComponentProps> = ({ productList }) => {
             secondary={`$${product.price}`}
           />
           <ListItemSecondaryAction>
-            <IconButton edge="end" aria-label="delete">
+            <IconButton
+              edge="end"
+              aria-label="delete"
+              onClick={() => onAddToCard(product)}
+            >
               <AddShoppingCartRounded />
             </IconButton>
           </ListItemSecondaryAction>
