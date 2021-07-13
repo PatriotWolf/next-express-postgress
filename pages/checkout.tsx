@@ -21,13 +21,16 @@ const CheckoutPage: React.FC = observer(() => {
   const { productStore, cartStore } = useStores();
   const [promoCode, setPromoCode] = useState(``);
   const theme = useTheme();
+
   const onAddToCart = (product: ProductProps) => {
     cartStore.addToCart(product);
   };
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setPromoCode(value);
   };
+
   return (
     <Container component="main">
       <Grid
