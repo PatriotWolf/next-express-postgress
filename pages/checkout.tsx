@@ -119,8 +119,22 @@ const CheckoutPage: React.FC = observer(() => {
                 padding: `${theme.spacing(1)}px`,
               }}
             >
-              <Typography variant="body1">SubTotal</Typography>
+              <Typography variant="body1">Subtotal</Typography>
               <Typography>${cartStore.subtotal.toFixed(2)}</Typography>
+            </Box>
+            <Box
+              style={{
+                display: `flex`,
+                justifyContent: `space-between`,
+                padding: `${theme.spacing(1)}px`,
+              }}
+            >
+              <Typography variant="body1">Discount</Typography>
+              <Typography
+                color={cartStore.subtotal > 0 ? "error" : "textPrimary"}
+              >
+                ${cartStore.discount.toFixed(2)}
+              </Typography>
             </Box>
             <Divider />
             <Box

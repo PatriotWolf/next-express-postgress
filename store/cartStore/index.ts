@@ -50,19 +50,19 @@ class CartStore {
       });
     }
   }
-
-  get subtotal(): number {
+  get discount(): number {
     return this.promotionRedeemedList.reduce((acc, promotionData) => {
       return acc + promotionData.price();
     }, 0);
   }
+  get subtotal(): number {
+    return this.entryList.reduce((acc, entry) => {
+      return acc + entry.price;
+    }, 0);
+  }
 
   get total(): number {
-    return (
-      this.entryList.reduce((acc, entry) => {
-        return acc + entry.price;
-      }, 0) - this.subtotal
-    );
+    return this.subtotal - this.discount;
   }
 }
 
