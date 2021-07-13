@@ -6,8 +6,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   banner: {
     margin: theme.spacing(1),
     padding: theme.spacing(1),
-    background: theme.palette.error.main,
-    color: theme.palette.error.contrastText,
+    background: theme.palette.secondary.light,
+    color: theme.palette.secondary.contrastText,
     borderRadius: theme.spacing(1),
   },
   listText: {
@@ -20,8 +20,8 @@ const Banner: React.FC<PromotionRedeemedProps> = ({ name, effect }) => {
   const classes = useStyles();
   return (
     <Box className={classes.banner}>
-      <Typography variant="h6">{name}</Typography>
-      <Typography variant="subtitle2">{effect}</Typography>
+      <Typography variant="subtitle2">{name}</Typography>
+      <Typography variant="caption">{effect}</Typography>
     </Box>
   );
 };
