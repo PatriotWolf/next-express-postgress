@@ -5,6 +5,7 @@ import ShoppingCartEntry from "./cartEntry";
 export interface PromotionRedeemedProps {
   name: string;
   effect: string;
+  price: () => number;
 }
 
 class CartStore {
@@ -40,23 +41,26 @@ class CartStore {
       this.promotionRedeemedList.push({
         name: `FF9543D1`,
         effect: `Reduces Document Generation price to $8.99 a unit when at least 10 documents are purchased`,
+        price: () => {
+          const cartAmount =
+            this.entryList.find((entry) => entry.product?.id === `docgen`)
+              ?.amount || 0;
+          return (cartAmount >= 10 ? cartAmount : 0) * 8.99;
+        },
       });
-      const i = this.entryList.find((entry) => entry.product?.id === `docgen`);
-      if (i !== undefined) {
-        i.discount = () => {
-          if (i.amount >= 10) {
-            return 8.99 * i.amount;
-          }
-          return 0;
-        };
-      }
     }
   }
-
-  get total(): number {
-    return this.entryList.reduce((acc, entry) => {
-      return acc + entry.price;
+  get subtotal(): number {
+    return this.promotionRedeemedList.reduce((acc, promotionData) => {
+      return acc + promotionData.price();
     }, 0);
+  }
+  get total(): number {
+    return (
+      this.entryList.reduce((acc, entry) => {
+        return acc + entry.price;
+      }, 0) - this.subtotal
+    );
   }
 }
 

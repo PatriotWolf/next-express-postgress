@@ -17,6 +17,7 @@ import CartList from "components/cart/CartList";
 import { useStores } from "store";
 import { ProductProps } from "store/productStore";
 import { PromotionRedeemedProps } from "store/cartStore";
+import Banner from "components/common/Banner";
 
 const CheckoutPage: React.FC = observer(() => {
   const { productStore, cartStore } = useStores();
@@ -108,13 +109,19 @@ const CheckoutPage: React.FC = observer(() => {
             {cartStore.promotionRedeemedList.length > 0 &&
               cartStore.promotionRedeemedList.map(
                 (promotionData: PromotionRedeemedProps) => (
-                  <Box key={promotionData.name}>
-                    <Typography variant="body1">
-                      {promotionData.name}
-                    </Typography>
-                  </Box>
+                  <Banner key={promotionData.name} {...promotionData} />
                 )
               )}
+            <Box
+              style={{
+                display: `flex`,
+                justifyContent: `space-between`,
+                padding: `${theme.spacing(1)}px`,
+              }}
+            >
+              <Typography variant="body1">SubTotal</Typography>
+              <Typography>${cartStore.subtotal.toFixed(2)}</Typography>
+            </Box>
             <Divider />
             <Box
               style={{

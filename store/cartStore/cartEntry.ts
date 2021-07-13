@@ -3,7 +3,6 @@ import { ProductProps } from "store/productStore";
 class ShoppingCartEntry {
   product: ProductProps;
   amount = 1;
-  discount: () => number = () => 0;
 
   constructor(product: ProductProps) {
     makeAutoObservable(this);
@@ -23,9 +22,7 @@ class ShoppingCartEntry {
   }
 
   get price(): number {
-    return this.product
-      ? this.product.price * this.amount - this.discount()
-      : 0;
+    return this.product ? this.product.price * this.amount : 0;
   }
 }
 
