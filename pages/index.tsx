@@ -23,8 +23,8 @@ interface User {
 }
 
 const Home: React.FC = () => {
-  let [userList, setUserList] = useState<User[]>([]);
-  let [userData, setUserData] = useState({
+  const [userList, setUserList] = useState<User[]>([]);
+  const [userData, setUserData] = useState({
     username: "",
     email: "",
     phone: "",

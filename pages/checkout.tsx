@@ -16,18 +16,23 @@ import ProductList from "components/product/ProductList";
 import CartList from "components/cart/CartList";
 import { useStores } from "store";
 import { ProductProps } from "store/productStore";
+import { PromotionRedeemedProps } from "store/cartStore";
+import Banner from "components/common/Banner";
 
 const CheckoutPage: React.FC = observer(() => {
   const { productStore, cartStore } = useStores();
   const [promoCode, setPromoCode] = useState(``);
   const theme = useTheme();
+
   const onAddToCart = (product: ProductProps) => {
     cartStore.addToCart(product);
   };
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setPromoCode(value);
   };
+
   return (
     <Container component="main">
       <Grid
@@ -100,6 +105,36 @@ const CheckoutPage: React.FC = observer(() => {
               >
                 redeem
               </Button>
+            </Box>
+            {cartStore.promotionRedeemedList.length > 0 &&
+              cartStore.promotionRedeemedList.map(
+                (promotionData: PromotionRedeemedProps) => (
+                  <Banner key={promotionData.name} {...promotionData} />
+                )
+              )}
+            <Box
+              style={{
+                display: `flex`,
+                justifyContent: `space-between`,
+                padding: `${theme.spacing(1)}px`,
+              }}
+            >
+              <Typography variant="body1">Subtotal</Typography>
+              <Typography>${cartStore.subtotal.toFixed(2)}</Typography>
+            </Box>
+            <Box
+              style={{
+                display: `flex`,
+                justifyContent: `space-between`,
+                padding: `${theme.spacing(1)}px`,
+              }}
+            >
+              <Typography variant="body1">Discount</Typography>
+              <Typography
+                color={cartStore.subtotal > 0 ? "error" : "textPrimary"}
+              >
+                ${cartStore.discount.toFixed(2)}
+              </Typography>
             </Box>
             <Divider />
             <Box
