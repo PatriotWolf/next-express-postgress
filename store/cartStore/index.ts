@@ -50,11 +50,13 @@ class CartStore {
       });
     }
   }
+
   get subtotal(): number {
     return this.promotionRedeemedList.reduce((acc, promotionData) => {
       return acc + promotionData.price();
     }, 0);
   }
+
   get total(): number {
     return (
       this.entryList.reduce((acc, entry) => {
