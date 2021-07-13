@@ -16,6 +16,7 @@ import ProductList from "components/product/ProductList";
 import CartList from "components/cart/CartList";
 import { useStores } from "store";
 import { ProductProps } from "store/productStore";
+import { PromotionRedeemedProps } from "store/cartStore";
 
 const CheckoutPage: React.FC = observer(() => {
   const { productStore, cartStore } = useStores();
@@ -104,6 +105,16 @@ const CheckoutPage: React.FC = observer(() => {
                 redeem
               </Button>
             </Box>
+            {cartStore.promotionRedeemedList.length > 0 &&
+              cartStore.promotionRedeemedList.map(
+                (promotionData: PromotionRedeemedProps) => (
+                  <Box key={promotionData.name}>
+                    <Typography variant="body1">
+                      {promotionData.name}
+                    </Typography>
+                  </Box>
+                )
+              )}
             <Divider />
             <Box
               style={{
