@@ -3,14 +3,15 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { Container, Paper, Typography, useTheme } from "@material-ui/core";
 
-const NotFound = () => {
+const NotFound: React.FC = () => {
   const router = useRouter();
   const theme = useTheme();
+
   useEffect(() => {
     setTimeout(() => {
       router.push("/");
     }, 3000);
-  }, []);
+  });
 
   return (
     <Container maxWidth="sm" component="main">

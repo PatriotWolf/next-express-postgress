@@ -4,6 +4,7 @@ export interface ProductProps {
   id: string;
   name: string;
   price: number;
+  image?: string;
 }
 
 class ProductStore {
@@ -17,6 +18,7 @@ class ProductStore {
       id: `docgen`,
       name: `Document Generation`,
       price: 9.99,
+      image: `https://i.imgflip.com/444tuw.jpg`,
     },
     {
       id: `form`,
