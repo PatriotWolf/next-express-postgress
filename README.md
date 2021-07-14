@@ -16,3 +16,8 @@ DATABASE_NAME
 DATABASE_USER
 DATABASE_PASSWORD
 ```
+
+## TODO
+List of todo wishlist in this project
+1. React High Performance with Memoizing
+1. Unit Testing with Jest
