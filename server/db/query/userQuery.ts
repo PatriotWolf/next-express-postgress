@@ -29,6 +29,16 @@ const userQuery = {
     client.release();
     return queryResult;
   },
+  deleteUser: async function (id: string): Promise<QueryResult<User>> {
+    const client = await pool.connect();
+    const query = `DELETE FROM
+    userstest
+    WHERE id = $1
+    RETURNING *`;
+    const queryResult = client.query(query, [id]);
+    client.release();
+    return queryResult;
+  },
 };
 
 export default userQuery;

@@ -52,6 +52,18 @@ class UserControler {
       return res.status(500).json("Server error");
     }
   }
+  public async deleteUser(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+
+    try {
+      const { rows } = await userQuery.deleteUser(id);
+      const todos = rows;
+      return res.send(todos);
+    } catch (error) {
+      console.error(error.message);
+      return res.status(500).json("Server error");
+    }
+  }
 }
 
 export default UserControler;

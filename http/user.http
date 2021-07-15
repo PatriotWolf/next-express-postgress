@@ -11,3 +11,6 @@ Content-Type: application/json
     "email":"johndoe@gmail.com",
     "phone": "0123456789"
 }
+
+###
+DELETE  http://localhost:3000/user/1
