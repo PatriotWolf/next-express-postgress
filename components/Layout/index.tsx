@@ -45,6 +45,7 @@ const Layout: React.FC = ({ children }) => {
         }}
       >
         <Grid item>
+          <Toolbar />
           <Box>{children}</Box>
         </Grid>
       </Grid>

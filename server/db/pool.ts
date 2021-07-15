@@ -19,7 +19,7 @@ const databaseConfig: PoolConfig = {
 
 const pool = new Pool(databaseConfig);
 
-export const createUserTable = async () => {
+export const createUserTable = async (): Promise<void> => {
   const userCreateQuery = `CREATE TABLE IF NOT EXISTS userstest
   (id SERIAL PRIMARY KEY, 
   username VARCHAR(100), 
