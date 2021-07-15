@@ -1,16 +1,11 @@
 import express from "express";
-import { IncomingMessage, ServerResponse } from "http";
-import { UrlWithParsedQuery } from "url";
 
 import usersRouter from "./routes/UserRouter";
 import pool, { createUserTable } from "./db/pool";
+import { NextServer } from "next/dist/server/next";
 
 interface ServerProps {
-  handle: (
-    req: IncomingMessage,
-    res: ServerResponse,
-    parsedUrl?: UrlWithParsedQuery | undefined
-  ) => Promise<any>;
+  nextApp: NextServer;
   isDev: boolean;
 }
 
@@ -19,9 +14,9 @@ class Server {
   private isDev;
   private handle;
 
-  constructor({ handle, isDev }: ServerProps) {
+  constructor({ nextApp, isDev }: ServerProps) {
     this.app = express();
-    this.handle = handle;
+    this.handle = nextApp.getRequestHandler();
     this.isDev = isDev;
     this.config();
     this.routerConfig();
@@ -40,14 +35,14 @@ class Server {
   }
 
   private dbConnect() {
-    pool.connect(function (err, _client, _done) {
+    pool.connect((err) => {
       if (err) throw new Error(err.message);
       console.log("Connected");
       createUserTable();
     });
   }
 
-  public start = (port: number) => {
+  public start = (port: number): Promise<unknown> => {
     return new Promise((resolve, reject) => {
       this.app
         .listen(port, () => {
@@ -58,7 +53,7 @@ class Server {
           );
           resolve(port);
         })
-        .on("error", (err: Object) => reject(err));
+        .on("error", (err: Error) => reject(err));
     });
   };
 }
