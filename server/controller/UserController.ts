@@ -77,10 +77,12 @@ class UserControler {
       return res.status(status.bad).send(errorMessage);
     }
     try {
-      const { rows } = await userQuery.updateUser(
-        { email, username, phone },
-        id
-      );
+      const { rows } = await userQuery.updateUser({
+        id,
+        email,
+        username,
+        phone,
+      });
       const todos = rows;
       return res.send(todos);
     } catch (error) {
