@@ -2,6 +2,7 @@ import { QueryResult } from "pg";
 import pool from "../pool";
 
 export interface User {
+  id: string;
   email: string;
   username: string;
   phone: string;
@@ -43,10 +44,7 @@ const userQuery = {
     client.release();
     return queryResult;
   },
-  updateUser: async function (
-    data: User,
-    id: string
-  ): Promise<QueryResult<User>> {
+  updateUser: async function (data: User): Promise<QueryResult<User>> {
     const client = await pool.connect();
     const query = `UPDATE 
     userstest
@@ -56,7 +54,7 @@ const userQuery = {
       data.email,
       data.username,
       data.phone,
-      id,
+      data.id,
     ]);
     client.release();
     return queryResult;
