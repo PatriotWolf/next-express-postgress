@@ -1,7 +1,12 @@
 import { Request, Response } from "express";
 import { errorMessage, status } from "../helper/status";
-import { isEmpty, isValidEmail, validateUserName } from "../helper/validation";
+import {
+  isEmpty,
+  isValidEmail,
+  isValidPhoneNumber,
+} from "../helper/validation";
 import pool from "../db/pool";
+import userQuery from "../db/query/userQuery";
 
 class UserControler {
   public async get(_req: Request, res: Response): Promise<Response> {
@@ -29,20 +34,18 @@ class UserControler {
       errorMessage.error = "Please enter a valid Email";
       return res.status(status.bad).send(errorMessage);
     }
-    if (!validateUserName(username)) {
-      errorMessage.error = "Invalid user name!";
+    if (!isValidPhoneNumber(phone)) {
+      errorMessage.error = "Please enter a valid Phone Number";
       return res.status(status.bad).send(errorMessage);
     }
     try {
-      const client = await pool.connect();
-      const createUserQuery = `INSERT INTO
-              userstest(email, username, phone, created_on)
-              VALUES($1, $2, $3, $4)
-              returning *`;
-      const values = [email, username, phone, created_on];
-      const { rows } = await client.query(createUserQuery, values);
+      const { rows } = await userQuery.selectUser(
+        email,
+        username,
+        phone,
+        created_on
+      );
       const todos = rows;
-      client.release();
       return res.send(todos);
     } catch (error) {
       console.error(error.message);

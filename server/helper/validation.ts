@@ -8,6 +8,11 @@ const isValidEmail = (email: string): boolean => {
   return regEx.test(email);
 };
 
+const isValidPhoneNumber = (phone: string): boolean => {
+  const regEx = /^[0-9]*$/;
+  return regEx.test(phone);
+};
+
 /**
  * validatePassword helper method
  * @param {string} password
@@ -45,4 +50,10 @@ const isEmpty = (input: string | undefined): boolean => {
   return true;
 };
 
-export { isValidEmail, validateUserName, validatePassword, isEmpty };
+export {
+  isValidEmail,
+  isValidPhoneNumber,
+  validateUserName,
+  validatePassword,
+  isEmpty,
+};
