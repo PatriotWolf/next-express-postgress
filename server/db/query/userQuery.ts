@@ -9,6 +9,20 @@ export interface User {
 }
 
 const userQuery = {
+  getUser: async function (): Promise<QueryResult<User>> {
+    const client = await pool.connect();
+    const sql = "SELECT * FROM userstest";
+    const queryResult = client.query(sql);
+    client.release();
+    return queryResult;
+  },
+  getUserById: async function (id: string): Promise<QueryResult<User>> {
+    const client = await pool.connect();
+    const sql = "SELECT * FROM userstest WHERE id=$1";
+    const queryResult = client.query(sql, [id]);
+    client.release();
+    return queryResult;
+  },
   selectUser: async function (
     email: string,
     username: string,

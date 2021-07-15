@@ -1,21 +1,29 @@
 import { Request, Response } from "express";
+
 import { errorMessage, status } from "../helper/status";
 import {
   isEmpty,
   isValidEmail,
   isValidPhoneNumber,
 } from "../helper/validation";
-import pool from "../db/pool";
 import userQuery from "../db/query/userQuery";
 
 class UserControler {
   public async get(_req: Request, res: Response): Promise<Response> {
     try {
-      const client = await pool.connect();
-      const sql = "SELECT * FROM userstest";
-      const { rows } = await client.query(sql);
+      const { rows } = await userQuery.getUser();
       const todos = rows;
-      client.release();
+      return res.send(todos);
+    } catch (error) {
+      console.error(error.message);
+      return res.status(500).json("Server error");
+    }
+  }
+  public async getUserById(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    try {
+      const { rows } = await userQuery.getUserById(id);
+      const todos = rows;
       return res.send(todos);
     } catch (error) {
       console.error(error.message);
