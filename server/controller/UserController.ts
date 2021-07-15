@@ -52,6 +52,35 @@ class UserControler {
       return res.status(500).json("Server error");
     }
   }
+  public async updateUser(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const { email, username, phone } = req.body;
+
+    if (isEmpty(email) || isEmpty(username)) {
+      errorMessage.error = "Username or Email cannot be empty";
+      return res.status(status.bad).send(errorMessage);
+    }
+    if (!isValidEmail(email)) {
+      errorMessage.error = "Please enter a valid Email";
+      return res.status(status.bad).send(errorMessage);
+    }
+    if (!isValidPhoneNumber(phone)) {
+      errorMessage.error = "Please enter a valid Phone Number";
+      return res.status(status.bad).send(errorMessage);
+    }
+    try {
+      const { rows } = await userQuery.updateUser(
+        { email, username, phone },
+        id
+      );
+      const todos = rows;
+      return res.send(todos);
+    } catch (error) {
+      console.error(error.message);
+      return res.status(500).json("Server error");
+    }
+  }
+
   public async deleteUser(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
 

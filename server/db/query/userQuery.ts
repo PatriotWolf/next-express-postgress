@@ -5,7 +5,7 @@ export interface User {
   email: string;
   username: string;
   phone: string;
-  created_on: Date;
+  created_on?: Date;
 }
 
 const userQuery = {
@@ -25,6 +25,24 @@ const userQuery = {
       username,
       phone,
       created_on,
+    ]);
+    client.release();
+    return queryResult;
+  },
+  updateUser: async function (
+    data: User,
+    id: string
+  ): Promise<QueryResult<User>> {
+    const client = await pool.connect();
+    const query = `UPDATE 
+    userstest
+    SET email = $1, username = $2, phone=$3  WHERE id = $4
+    RETURNING *`;
+    const queryResult = client.query(query, [
+      data.email,
+      data.username,
+      data.phone,
+      id,
     ]);
     client.release();
     return queryResult;

@@ -11,6 +11,14 @@ Content-Type: application/json
     "email":"johndoe@gmail.com",
     "phone": "0123456789"
 }
-
 ###
-DELETE  http://localhost:3000/user/1
+PUT http://localhost:3000/user/18
+Content-Type: application/json
+
+{
+    "username":"JohnDoe",
+    "email":"johndoe@gmail.com",
+    "phone": "0123456789"
+}
+###
+DELETE  http://localhost:3000/user/17
