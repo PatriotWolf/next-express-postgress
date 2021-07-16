@@ -55,7 +55,7 @@ const Home: React.FC = () => {
     }
   };
 
-  const deleteUser = async (id: string) => {
+  const deleteUser = React.useCallback(async (id: string) => {
     try {
       const requestOption: RequestInit = {
         method: `DELETE`,
@@ -70,7 +70,7 @@ const Home: React.FC = () => {
     } catch (err) {
       console.log(err);
     }
-  };
+  }, []);
 
   const requestUser = async () => {
     try {
@@ -85,9 +85,20 @@ const Home: React.FC = () => {
       console.log(err);
     }
   };
+
+  const MemoUserList = React.useMemo(() => {
+    return (
+      <UserListPaper
+        userList={userList}
+        onDelete={(userId: string) => deleteUser(userId)}
+      />
+    );
+  }, [userList, deleteUser]);
+
   useEffect(() => {
     requestUser();
   }, []);
+
   return (
     <Container maxWidth="sm" component="main">
       <Typography
@@ -119,10 +130,7 @@ const Home: React.FC = () => {
           onSubmit={addUser}
         />
       </Paper>
-      <UserListPaper
-        userList={userList}
-        onDelete={(userId: string) => deleteUser(userId)}
-      />
+      {MemoUserList}
     </Container>
   );
 };
