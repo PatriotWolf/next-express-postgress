@@ -62,7 +62,6 @@ const Home: React.FC = () => {
         headers: {
           "Content-Type": `application/json`,
         },
-        body: JSON.stringify({ ...userData }),
       };
       const response = await request<UserData[]>(`/user/${id}`, requestOption);
       if (response.parsedBody) {
